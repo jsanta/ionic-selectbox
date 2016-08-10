@@ -15,8 +15,8 @@
                 return $ionicModal.fromTemplateUrl('selectModal.html', {
                     scope: $scope,
                     //animation: 'slide-in-right'
-                      animation: 'animated slideInRight',
-                      hideDelay:620
+                    animation: 'animated slideInRight',
+                    hideDelay: 620
                 }).then(function (modal) {
                     selectCtrl.modal = modal;
 
@@ -104,6 +104,8 @@
         initModal();
         selectCtrl.openModal = function () {
             if (!selectCtrl.disableIf) {
+
+                // Native transtiions commented due to crappy performance on devices
 //                try {
 //                    var options = {
 //                            "direction"        : "left", // 'left|right|up|down', default 'left' (which is like 'next')
@@ -198,7 +200,7 @@
         });
         selectCtrl.filteredList = selectCtrl.list;
 
-        // Binds a watcher to list to avoid bvlank listings
+        // Binds a watcher to list to avoid blank listings
         // when promises have not resolved
         $scope.$watch(angular.bind(this, function () {
             return this.list;
