@@ -1,0 +1,29 @@
+{
+  "name": "ionic-selectbox",
+  "version": "1.0.0",
+  "description": "Yet another selectbox component in AngularJS 1.5 < 2, with search and grouping, to be used in Ionic framework.",
+  "main": "js/selectComponent.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsanta/ionic-selectbox.git"
+  },
+  "keywords": [
+    "select",
+    "selectbox",
+    "ionic",
+    "angular",
+    "angularjs",
+    "search",
+    "grouping",
+    "option"
+  ],
+  "author": "Jose Ignacio Santa Cruz G <j@santa.cl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsanta/ionic-selectbox/issues"
+  },
+  "homepage": "https://github.com/jsanta/ionic-selectbox#readme"
+}
