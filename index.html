@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,64 +15,64 @@
     <![endif]-->
 
     <title>Ionic-selectbox by jsanta</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <header>
-      <div class="inner">
-        <h1>Ionic-selectbox</h1>
-        <h2>Yet another selectbox component in AngularJS 1.5 &lt; 2, with search and grouping, to be used in Ionic framework.</h2>
-        <a href="https://github.com/jsanta/ionic-selectbox" class="button"><small>View project on</small> GitHub</a>
-      </div>
+        <div class="inner">
+            <h1>Ionic-selectbox</h1>
+            <h2>Yet another selectbox component in AngularJS 1.5 &lt; 2, with search and grouping, to be used in Ionic framework.</h2>
+            <a href="https://github.com/jsanta/ionic-selectbox" class="button"><small>View project on</small> GitHub</a>
+        </div>
     </header>
 
     <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
+        <div class="inner clearfix">
+            <section id="main-content">
+                <h3>
 <a id="ionic-selectbox" class="anchor" href="#ionic-selectbox" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ionic-selectbox</h3>
 
-<blockquote>
-<p>Yet another selectbox component in <em><strong>AngularJS 1.5</strong></em> &lt; 2, with search and grouping, to be used in <strong><em>Ionic framework</em></strong>.</p>
-</blockquote>
+                <blockquote>
+                    <p>Yet another selectbox component in <em><strong>AngularJS 1.5</strong></em> &lt; 2, with search and grouping, to be used in <strong><em>Ionic framework</em></strong>.</p>
+                </blockquote>
 
-<p>Ionic selects have only one problem, they are <em>HTML</em> select boxes, so they look as a mobile web page component. I developed this component because in a project we were facing the problem of a  huge list of records that had to be shown as a select box, but needed a search field to filter between the 3000 (or so) items, and also group them using a collapsible-like feature.</p>
+                <p>Ionic selects have only one problem, they are <em>HTML</em> select boxes, so they look as a mobile web page component. I developed this component because in a project we were facing the problem of a huge list of records that had to be shown as a select box, but needed a search field to filter between the 3000 (or so) items, and also group them using a collapsible-like feature.</p>
 
-<p>Normal <strong><em>AngularJS</em></strong> select boxes solve the listing and the grouping using <em>ng-options</em>, but if the option list has too many items, a normal select becomes unusable.</p>
+                <p>Normal <strong><em>AngularJS</em></strong> select boxes solve the listing and the grouping using <em>ng-options</em>, but if the option list has too many items, a normal select becomes unusable.</p>
 
-<p>Found a couple of user-made solutions for this, but none of them really helped on solving our requirements, so I coded an Angular component.</p>
+                <p>Found a couple of user-made solutions for this, but none of them really helped on solving our requirements, so I coded an Angular component.</p>
 
-<h2>
+                <h2>
 <a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to install?</h2>
 
-<p>Run:
-<code>bower install https://github.com/jsanta/ionic-selectbox.git</code></p>
+                <p>Run:
+                    <code>bower install https://github.com/jsanta/ionic-selectbox.git</code></p>
 
-<h2>
+                <h2>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements:</h2>
 
-<p>This selectbox uses <em>fuzzy search</em>, and <em>groupBy</em> filters from <a href="https://github.com/a8m/angular-filter">https://github.com/a8m/angular-filter</a>
-To minimize the number of watchers it also uses <em>bindonce</em> from <a href="https://github.com/Pasvaz/bindonce">https://github.com/Pasvaz/bindonce</a> (I suspect it's not really needed).</p>
+                <p>This selectbox uses <em>fuzzy search</em>, and <em>groupBy</em> filters from <a href="https://github.com/a8m/angular-filter">https://github.com/a8m/angular-filter</a>
+                    <br> To minimize the number of watchers it also uses <em>bindonce</em> from <a href="https://github.com/Pasvaz/bindonce">https://github.com/Pasvaz/bindonce</a> (I suspect it's not really needed).</p>
 
-<h2>
+                <h2>
 <a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use?</h2>
 
-<p>Import these files into your index.html file:</p>
+                <p>Import these files into your index.html file:</p>
 
-<ul>
-<li><em>lib/ionic-selectbox/css/selectComponent.css</em></li>
-<li><em>lib/ionic-selectbox/js/selectComponent.js</em></li>
-</ul>
+                <ul>
+                    <li><em>lib/ionic-selectbox/css/selectComponent.css</em></li>
+                    <li><em>lib/ionic-selectbox/js/selectComponent.js</em></li>
+                </ul>
 
-<p>It's binded to the AngularJS module called app, so if you called your app with other name you'll have to change the name on the <em>.js</em> file.</p>
+                <p>It's binded to the AngularJS module called <i>app</i>, so if you called your app with other name you'll have to change the name on the <em>.js</em> file.</p>
 
-<p><strong>Note</strong>: Instructions  may be  inacurate, but if you have done similar things before, or have some experience in developing using  external components, it shouldn't be an issue (yeah! I know, I plan to correct this).</p>
+                <p><strong>Note</strong>: Instructions may be inacurate, but if you have done similar things before, or have some experience in developing using external components, it shouldn't be an issue (yeah! I know, I plan to correct this).</p>
 
-<h1>
-<a id="full-example" class="anchor" href="#full-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Full example</h1>
+                <h2>
+<a id="full-example" class="anchor" href="#full-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Full example</h2>
 
-<p>Using <em>myCtrl</em> as the controller (using <em>controller as</em> notation)
-<code>&lt;selectbox 
+                <p>Using <em>myCtrl</em> as the controller (using <em>controller as</em> notation)
+                    <code><pre>&lt;selectbox
            model="myCtrl.model"
            list="myCtrl.selectList"
            display-callback="myCtrl.displayDetail"
@@ -82,59 +83,72 @@ To minimize the number of watchers it also uses <em>bindonce</em> from <a href="
            disable-if="myCtrl.operationOK"
            place-holder="select item from list"
            ng-if="!!!myCtrl.disableSelect"
-           &gt;&lt;/selectbox&gt;</code></p>
+           &gt;&lt;/selectbox&gt;</pre></code></p>
 
-<ul>
-<li>
-<strong>model</strong>: <em>required</em> model in the controller. </li>
-<li>
-<strong>list</strong>: <em>required</em> object array. It can also be just an array of strings. Any grouping is solved using the common attributes inside the object (see <em>group-by</em>). </li>
-<li>
-<strong>display-callback</strong>: <em>optional</em> function used to parse each item on the list for displaying the data on screen.</li>
-<li>
-<strong>parse-data</strong>: <em>optional</em> function used to show the data when a value is selected. See the code for another way of achieving this without using a directive. If not  included it uses the string representation of the object in the array (<em>[Object object]</em> or <em>string_value</em>).</li>
-<li>
-<strong>display-item</strong>: <em>optional</em> function used to show an item detail (when required). It uses any custom  component used only to display data based on the the items attributes, like an embedded <em>more info</em> link.</li>
-<li>
-<strong>group-by</strong>: <em>optional</em> object attribute used to group items.</li>
-<li>
-<strong>parse-group-key</strong>: <em>optional</em> function required to parse the group key (if needed).</li>
-<li>
-<strong>disable-if</strong>: <em>optional</em> disables the selectbox if this value is true.</li>
-<li>
-<strong>place-holder</strong>: <em>optional</em> string used as title for the select list, and as the  select field's placeholder.</li>
-<li>
-<em>ng-if</em>: Angular <em>ng-if</em> (included just because...).</li>
-</ul>
+                <ul>
+                    <li>
+                        <strong>model</strong>: <em>required</em> model in the controller. </li>
+                    <li>
+                        <strong>list</strong>: <em>required</em> object array. It can also be just an array of strings. Any grouping is solved using the common attributes inside the object (see <em>group-by</em>). </li>
+                    <li>
+                        <strong>display-callback</strong>: <em>optional</em> function used to parse each item on the list for displaying the data on screen.</li>
+                    <li>
+                        <strong>parse-data</strong>: <em>optional</em> function used to show the data when a value is selected. See the code for another way of achieving this without using a directive. If not included it uses the string representation of the object in the array (<em>[Object object]</em> or <em>string_value</em>).</li>
+                    <li>
+                        <strong>display-item</strong>: <em>optional</em> function used to show an item detail (when required). It uses any custom component used only to display data based on the the items attributes, like an embedded <em>more info</em> link.</li>
+                    <li>
+                        <strong>group-by</strong>: <em>optional</em> object attribute used to group items.</li>
+                    <li>
+                        <strong>parse-group-key</strong>: <em>optional</em> function required to parse the group key (if needed).</li>
+                    <li>
+                        <strong>disable-if</strong>: <em>optional</em> disables the selectbox if this value is true.</li>
+                    <li>
+                        <strong>place-holder</strong>: <em>optional</em> string used as title for the select list, and as the select field's placeholder.</li>
+                    <li>
+                        <em>ng-if</em>: Angular <em>ng-if</em> (included just because...).</li>
+                </ul>
 
-<h2>
-<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover table-condensed table-striped table-bordered">
 
-<ul>
-<li>Make it easier to use out of the box.</li>
-<li>Improve performance.</li>
-</ul>
+                        <tbody>
+                            <tr>
+                                <td><img src="images/grouped_cities.png" class="img-responsive" alt="Grouped items"></td>
+                                <td><img src="images/cities_fuzzy_search.png" class="img-responsive" alt="Fuzzy search"></td>
+                                <td><img src="images/accounts_display_detail.png" class="img-responsive" alt="Detail display"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-<p>Feel free to fork, make improvements and use. Just share your findings as a pull request.</p>
-        </section>
+                <h3>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h3>
 
-        <aside id="sidebar">
-          <a href="https://github.com/jsanta/ionic-selectbox/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/jsanta/ionic-selectbox/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+                <ul>
+                    <li>Make it easier to use out of the box.</li>
+                    <li>Improve performance.</li>
+                </ul>
 
-          <p class="repo-owner"><a href="https://github.com/jsanta/ionic-selectbox"></a> is maintained by <a href="https://github.com/jsanta">jsanta</a>.</p>
+                <p>Feel free to fork, make improvements and use. Just share your findings as a pull request.</p>
+            </section>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+            <aside id="sidebar">
+                <a href="https://github.com/jsanta/ionic-selectbox/zipball/master" class="button">
+                    <small>Download</small> .zip file
+                </a>
+                <a href="https://github.com/jsanta/ionic-selectbox/tarball/master" class="button">
+                    <small>Download</small> .tar.gz file
+                </a>
+
+                <p class="repo-owner">
+                    <a href="https://github.com/jsanta/ionic-selectbox"></a> is maintained by <a href="https://github.com/jsanta">jsanta</a>.</p>
+
+                <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+            </aside>
+        </div>
     </div>
 
-  
-  </body>
+
+</body>
+
 </html>
