@@ -1,0 +1,91 @@
+<div class="select-box">
+
+	<label class="item item-input" ng-click="$ctrl.openModal()">
+		<input type="text" placeholder="{{::$ctrl.placeHolder}}" ng-model="$ctrl.model" displayselected parse-data="$ctrl.pparseData" readonly>
+		<i class="icon ion-arrow-down-b placeholder-icon"></i>
+	</label>
+
+</div>
+
+<script id="selectModal.html" type="text/ng-template">
+	<ion-modal-view class="select-modal">
+
+<!--
+		<ion-header-bar class="bar bar-header bar-positive">
+			<h1 class="title title-image-white"></h1>
+		</ion-header-bar>
+-->
+		<ion-header-bar class="bar bar-header bar-dark">
+			<button ng-click="$ctrl.closeModal()" class="button button-clear icon-left ion-chevron-left "></button>
+			<h1 class="title"> {{ ::$ctrl.placeHolder | ucfirst }}</h1>
+		</ion-header-bar>
+
+		<ion-header-bar class="bar bar-subheader bar-stable item-input-inset">
+			<label class="item-input-wrapper" ng-click="$ctrl.clearSearch()">
+				<input type="text" placeholder="search"
+					   ng-model="$ctrl.modalSearch"
+					   ng-model-options="{ debounce: 350 }">
+				<i class="icon ion-search placeholder-icon"></i>
+			</label>
+		</ion-header-bar>
+
+		<ion-content overflow-scroll="true" class="has-header has-subheader">
+
+			<ion-list class="no-groupBy" ng-if="!$ctrl.groupBy" ng-cloak>
+				<ion-item class="item-text-wrap" bindonce ng-repeat="item in $ctrl.filteredList track by $index" on-hold="$ctrl.displayDetail($event, item);" ng-click="$ctrl.selectValue(item)">
+					<div class="row" bindonce="item">
+						<div class="col col-90" ng-click="$ctrl.selectValue(item)">{{item.displayItem}}</div>
+						<div class="col text-center" bo-if="!!$ctrl.displayCallback">
+							<button class="button button-clear button-dark icon ion-information-circled" ng-click="$ctrl.displayDetail($event, item);"></button>
+						</div>
+					</div>
+					<div ng-if="$ctrl.displayedItem === item" ng-click="$ctrl.selectValue(item)" class="visible-detail"></div>
+				</ion-item>
+			</ion-list>
+
+			<ion-list class="groupBy" ng-if="!!$ctrl.groupBy" ng-cloak>
+				<ion-item class="item-text-wrap" ng-repeat="(key, value) in $ctrl.filteredList | groupBy: $ctrl.groupBy">
+					<div class="row" ng-click="$ctrl.toggleGroup(key)">
+						<div class="col col-80">{{::$ctrl.pparseGroupKey(key)}}</div>
+						<div class="col text-right">
+							<button class="button button-clear button-dark icon "
+									ng-class="{ 'ion-ios-minus-empty': $ctrl.displayKey[key] && !$ctrl.modalSearch,
+											  'ion-ios-plus-empty': !$ctrl.displayKey[key] && !$ctrl.modalSearch,
+											  'ion-ios-plus': !!$ctrl.modalSearch }"></button>
+						</div>
+					</div>
+					<div class="list" ng-if="$ctrl.displayKey[key] || !!$ctrl.modalSearch">
+						<div class="item" bindonce
+							 ng-repeat="item in value track by $index | fuzzy: $ctrl.modalSearch"
+							 on-hold="$ctrl.displayDetail($event, item);"
+							 ng-if="!!!$ctrl.grid">
+							<div class="row" bindonce="item">
+								<div class="col col-90" ng-click="$ctrl.selectValue(item)">{{item.displayItem}}</div>
+								<div class="col text-center" bo-if="!!$ctrl.displayCallback">
+									<button class="button button-clear button-dark icon ion-information-circled" ng-click="$ctrl.displayDetail($event, item);"></button>
+								</div>
+							</div>
+							<div ng-if="$ctrl.displayedItem === item" ng-click="$ctrl.selectValue(item)" class="visible-detail"></div>
+						</div>
+
+						<div class="selectbox-grid"
+							 ng-if="!!$ctrl.grid">
+							<griditem
+									  ng-repeat="item in value track by $index | fuzzy: $ctrl.modalSearch"
+									  griddisplay="{{$ctrl.gridDisplay}}"
+									  ng-click="$ctrl.gridItemClick($event, item)"
+									  ng-class="{ 'selected': item.multipleSelect === true }"
+									  >
+							</griditem>
+						</div>
+					</div>
+
+				</ion-item>
+			</ion-list>
+			<div class="spacer" style="width: 100%; height: 80px;"></div>
+		</ion-content>
+		<button id="multipleAdd" class="button button-large button-royal icon ion-plus"
+				ng-if="!!$ctrl.multiple"
+				ng-click="$ctrl.selectMultiple()"></button>
+	</ion-modal-view>
+</script>

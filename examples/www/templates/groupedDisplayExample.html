@@ -1,0 +1,61 @@
+<ion-view title="Grouped display example" id="groupedPage">
+	<ion-content padding="true" class="has-header">
+
+		<p>Classic approach:
+			<br> Two selecboxes, the second one depending on the value selected on the first one.
+		</p>
+
+		<div class="list list-inset">
+
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Department
+				</div>
+
+				<select id="department" name="department"
+						ng-model="gCtrl.department"
+						ng-options="department as department.departmentName for department in gCtrl.departments">
+					<option value='' disabled selected hidden ng-show="!gCtrl.department">Select a department</option>
+				</select>
+			</label>
+
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Cities
+				</div>
+
+				<select id="city" name="city" ng-model="gCtrl.city" ng-options="city as city.cityName for city in gCtrl.cities | filter:{ deptCode: gCtrl.department.departmentCode }:true">
+					<option value='' disabled selected hidden ng-show="!gCtrl.city">Select a city</option>
+				</select>
+			</label>
+
+			<div class="item item-divider" style="height: 10px; min-height: 10px; padding: 0; margin: 0;"></div>
+
+			<div class="item">
+				<p>Now a slightly improved grouped selectbox:</p>
+			</div>
+
+			<selectbox model="gCtrl.city"
+					   list="gCtrl.cities"
+					   parse-data="gCtrl.getCityName"
+					   group-by="deptCode"
+					   parse-group-key="gCtrl.parseDepartment"
+					   place-holder="Select city"></selectbox>
+
+			<div class="item">
+				<p>To get the Department value you may need a watch in your controller. Not really big deal:</p>
+			</div>
+
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">Department (obtained from the selected city)</span>
+				<input type="text" placeholder="Department"
+					   ng-value="gCtrl.city.deptName"
+					   >
+			</label>
+
+			<div class="item">
+				<p><strong>BEWARE</strong>: Your data structure may require some adjusting!<br> <small>(Check the source, Luke)</small></p>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

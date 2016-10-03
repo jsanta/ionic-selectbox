@@ -1,0 +1,37 @@
+<ion-view title="Inline search example" id="searchPage">
+	<ion-content padding="true" class="has-header">
+
+		<p>Classic approach:
+			<br> A search input that populates a selectbox.
+		</p>
+
+		<div class="list list-inset">
+			<label class="item item-input">
+				<input type="text" placeholder="Search by city name (try juan, rosa or sant)"
+					   ng-model="sCtrl.search">
+			</label>
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Cities
+				</div>
+
+				<select id="city" name="city"
+						ng-model="sCtrl.city"
+						ng-options="city as city.cityName for city in sCtrl.cities | fuzzy: sCtrl.search">
+					<option value='' disabled selected hidden ng-show="!sCtrl.city">select a city</option>
+				</select>
+			</label>
+
+			<div class="item item-divider" style="height: 10px; min-height: 10px; padding: 0; margin: 0;"></div>
+
+			<div class="item">
+				<p>Now a slightly improved selectbox:</p>
+			</div>
+
+			<selectbox model="sCtrl.city"
+					   list="sCtrl.cities"
+					   parse-data="sCtrl.getCityName"
+					   place-holder="Select city"></selectbox>
+		</div>
+	</ion-content>
+</ion-view>

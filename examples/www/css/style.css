@@ -1,0 +1,23 @@
+/* Empty. Add your own CSS if you like */
+p {
+	margin: 0 auto 1.3em;
+	padding: 1em;
+}
+.item p {
+	white-space: normal;
+	padding: 0;
+}
+.input-label {
+	font-weight: 600;
+}
+.item-input.item-stacked-label input {
+	padding-left: 0.8em;
+}
+
+.selectbox-grid-item.small {
+	font-size: 0.5rem;
+}
+.blue-bg {
+	background-color: #3a60ff;
+	color: #fff;
+}
