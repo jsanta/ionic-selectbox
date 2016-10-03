@@ -1,88 +1,151 @@
 /**
 * selectComponent.css
 **/
+
 .select-box {
-    position: relative;
+	position: relative;
 }
-
 .select-box .item {
-    width: 100%;
-    margin: 0;
-    padding: 0.8em 0.3em;
+	width: 100%;
+	margin: 0;
+	/*	padding: 0.8em 0.3em;*/
 }
+
+/*
 .select-box .item input {
-    padding: 5px 1em;
+	padding: 5px 1em;
 }
+*/
+
 .select-box .item input[readonly] {
-    cursor: auto;
-    border-bottom: 1px solid #bbb!important;
-
-    padding-right: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+	cursor: auto;
+	/*	border-bottom: 1px solid #bbb!important;*/
+	padding-right: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
-
-.select-box .placeholder-icon:last-child, ion-modal-view.select-modal .placeholder-icon:last-child {
-    position: absolute;
-    right: 14px;
-    bottom: 14px;
-}
-
-ion-modal-view.select-modal ion-header-bar.bar-subheader:not(.with-form) {
-    position: relative;
-    margin: 45px 0 0 0;
-    padding: 0;
+.select-box .placeholder-icon:last-child,
+ion-modal-view.select-modal .placeholder-icon:last-child {
+	position: absolute;
+	right: 14px;
+	/*	bottom: 14px;*/
 }
 ion-modal-view.select-modal ion-header-bar.bar-subheader input {
-     padding-right: 2.5em;
+	padding-right: 2.5em;
 }
-
 ion-modal-view.select-modal ion-content.with-form {
-    margin-bottom: 0;
-    padding: 0;
+	margin-bottom: 0;
+	padding: 0;
 }
-
 ion-modal-view.select-modal ion-content ion-item {
-    padding: 0;
-    border: 1px solid #ccc!important;
+	padding: 0;
+	border: 1px solid #ccc!important;
 }
 ion-modal-view.select-modal ion-content .groupBy ion-item > .row {
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-    line-height: 24px;
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	line-height: 24px;
 }
-ion-modal-view.select-modal ion-content ion-item > .row .button, ion-modal-view.select-modal ion-content ion-item .list > .item .button.ion-information-circled {
-    min-height: 27px!important;
-    height: 27px!important;
+ion-modal-view.select-modal ion-content ion-item > .row .button,
+ion-modal-view.select-modal ion-content ion-item .list > .item .button.ion-information-circled {
+	min-height: 27px!important;
+	height: 27px!important;
 }
-ion-modal-view.select-modal ion-content ion-item > .row .button.icon:before, ion-modal-view.select-modal ion-content ion-item .list > .item .button.icon.ion-information-circled:before {
-    line-height: 24px;
+ion-modal-view.select-modal ion-content ion-item > .row .button.icon:before,
+ion-modal-view.select-modal ion-content ion-item .list > .item .button.icon.ion-information-circled:before {
+	line-height: 24px;
 }
 ion-modal-view.select-modal ion-content ion-item > .row > .col:first-child {
-    padding-left: 0.8em;
+	padding-left: 0.8em;
 }
-
 ion-modal-view.select-modal ion-content ion-item .list {
-    padding: 0;
+	padding: 0;
 }
 ion-modal-view.select-modal ion-content ion-item .list > .item {
-    border-top: 1px solid #ddd!important;
-    margin: 0;
-    background-color: rgba(255,255,255,0.4);
-    line-height: 24px;
-    padding-top: 0.6em;
-    padding-bottom: 0.8em;
-
+	border-top: 1px solid #ddd!important;
+	margin: 0;
+	background-color: rgba(255, 255, 255, 0.4);
+	line-height: 24px;
+	padding-top: 0.6em;
+	padding-bottom: 0.8em;
 }
-
 ion-modal-view.select-modal ion-content .no-groupBy ion-item {
-    line-height: 32px;
-    padding: 0.3em;
+	line-height: 32px;
+	padding: 0.3em;
 }
-
 ion-modal-view.select-modal ion-content .visible-detail {
-    margin: -10px 0 auto;
+	margin: -10px 0 auto;
 }
 
+/*
+ion-modal-view.select-modal ion-header-bar.bar-subheader:not(.with-form):nth-child(1) {
+	position: relative;
+	margin: 45px 0 0 0;
+	padding: 0;
+}
+*/
+
+ion-content.with-form {
+	margin-top: 44px;
+	margin-bottom: 0;
+}
+.select-modal .item-input-wrapper {
+	background-color: transparent;
+}
+.select-box input[readonly] {
+	background-color: transparent;
+}
+
+.selectbox-grid {
+	position: relative;
+	width: 95%;
+	margin: 0.5em auto;
+	padding: 0;
+}
+griditem {
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+
+	height: 100px;
+	min-height: 100px;
+}
+.selectbox-grid-item {
+	vertical-align: top;
+	display: inline-block;
+	margin: 0;
+	padding: 0.7em;
+	border: 1px solid #f0f0f0;
+	width: 33%;
+	height: 100px;
+	min-height: 100px;
+}
+
+.groupBy .list ion-item > .row {
+	border-bottom: 1px solid #eee;
+	background-color: rgba(238, 238, 238, 0.2);
+}
+
+#multipleAdd {
+	position: absolute;
+	z-index: 1000;
+	bottom: 1em;
+	right: 1em;
+	padding: 0.4rem 0 0.3rem;
+	border-radius: 50% 50%;
+	box-shadow: 1px 2px 8px #333;
+}
+
+griditem {
+	position: relative;
+}
+griditem.selected:after {
+	position: absolute;
+	bottom: 0;
+	left: 3px;
+	font-family: "Ionicons";
+	color: rgba(56, 126, 245, 0.6);
+	content: "";
+}
