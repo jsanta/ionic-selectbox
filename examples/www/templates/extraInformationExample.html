@@ -1,0 +1,74 @@
+<ion-view title="Extra information example" id="extrainfoPage">
+	<ion-content padding="true" class="has-header">
+		<p>We'll be using the grouped example, plus extra information.
+			<br>Classic approach:
+			<br> Two selectboxes, the second one depending on the value selected on the first one. After the value is selected extra information is shown.
+		</p>
+
+		<div class="list list-inset">
+
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Department
+				</div>
+
+				<select id="department" name="department"
+						ng-model="eCtrl.department"
+						ng-options="department as department.departmentName for department in eCtrl.departments">
+					<option value='' disabled selected hidden ng-show="!eCtrl.department">Select a department</option>
+				</select>
+			</label>
+
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Cities
+				</div>
+
+				<select id="city" name="city" ng-model="eCtrl.city" ng-options="city as city.cityName for city in eCtrl.cities | filter:{ deptCode: eCtrl.department.departmentCode }:true">
+					<option value='' disabled selected hidden ng-show="!eCtrl.city">Select a city</option>
+				</select>
+			</label>
+
+<!--
+			<div class="item" ng-if="!!eCtrl.city">
+				<p><strong>JSON value:</strong></p>
+				<pre>{{eCtrl.city | json}}</pre>
+			</div>
+-->
+			<extrainfo city="eCtrl.city"></extrainfo>
+
+			<div class="item item-divider" style="height: 10px; min-height: 10px; padding: 0; margin: 0;"></div>
+
+			<div class="item">
+				<p>This case enables an info button that can be  pressed to see the extra information before choosing a value. Now the slightly improved grouped selectbox:</p>
+			</div>
+
+			<selectbox model="eCtrl.city"
+					   list="eCtrl.cities"
+					   display-callback="eCtrl.displayDetail"
+					   display-item="eCtrl.displayCityName"
+					   parse-data="eCtrl.getCityName"
+					   group-by="deptCode"
+					   parse-group-key="eCtrl.parseDepartment"
+					   place-holder="Select city"></selectbox>
+
+			<div class="item">
+				<p>To get the Department value you may need a watch in your controller. Not really big deal:</p>
+			</div>
+
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">Department (obtained from the selected city)</span>
+				<input type="text" placeholder="Department"
+					   ng-value="eCtrl.city.deptName"
+					   >
+			</label>
+
+			<extrainfo city="eCtrl.city"></extrainfo>
+
+			<div class="item">
+				<p><strong>BEWARE</strong>: Your data structure may require some adjusting!<br> <small>(Check the source, Luke)</small></p>
+				<p><strong>IMPORTANT</strong>: This option REQUIRES (not optional) an AngularJS component for the extra information display.<br> <small>(Check the source, Luke... again...)</small></p>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

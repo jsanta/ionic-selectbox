@@ -1,0 +1,22 @@
+<ion-view title="Grid display example" id="gridPage">
+	<ion-content padding="true" class="has-header">
+
+		<p>This use case is the same as the Grouped display example, but items are displayed as a grid.</p>
+
+		<div class="list list-inset">
+			<selectbox model="gridCtrl.multiCity"
+					   list="gridCtrl.citiesSet"
+					   display-item="gridCtrl.displayCityName"
+					   parse-data="gridCtrl.getCityName"
+					   group-by="deptCode"
+					   parse-group-key="gridCtrl.parseDepartment"
+					   place-holder="Select cities"
+					   grid="true"
+					   grid-display="griddisplay"
+					   multiple="true"></selectbox>
+		</div>
+
+		<pre>{{gridCtrl.multiCity | json}}</pre>
+
+	</ion-content>
+</ion-view>
