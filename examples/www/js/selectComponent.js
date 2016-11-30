@@ -220,11 +220,11 @@
 
 			// Binds a watcher to list to avoid blank listings
 			// when promises have not resolved
-			$scope.$watch(angular.bind(this, function () {
+			$scope.$watchCollection(angular.bind(this, function () {
 				return this.list;
 			}),
 				function (newVal, oldVal) {
-					console.log('Updates list');
+					//console.log('Updates list');
 					if ((!!newVal || !!oldVal) && newVal !== oldVal) {
 						selectCtrl.filteredList = (!!newVal) ? selectCtrl.list : selectCtrl.filteredList;
 						selectCtrl.filteredList = _.map(selectCtrl.filteredList, function (v, k) {
