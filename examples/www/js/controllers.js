@@ -23,12 +23,16 @@
 				// TIP: Access Route Parameters for your page via $stateParams.parameterName
 				function ($scope, $stateParams, geoData) {
 					var sCtrl = this;
-					sCtrl.cities = geoData.cities;
+          //sCtrl.cities = geoData.cities;
 
 					sCtrl.getCityName = function (city) {
 						return city.cityName;
 					};
 
+          // Because of a performance illusion, data is loaded after entering the state
+					$scope.$on('$ionicView.afterEnter', function () {
+            sCtrl.cities = geoData.cities;
+          });
 
 				}]
 			 )
@@ -40,9 +44,6 @@
 				// TIP: Access Route Parameters for your page via $stateParams.parameterName
 				function ($scope, $stateParams, geoData) {
 					var gCtrl = this;
-
-					gCtrl.departments = geoData.departments;
-					gCtrl.cities      = geoData.cities;
 
 					gCtrl.getCityName = function (city) {
 						return city.cityName;
@@ -64,6 +65,12 @@
 
 						});
 
+          // Because of a performance illusion, data is loaded after entering the state
+          $scope.$on('$ionicView.afterEnter', function () {
+            gCtrl.departments = geoData.departments;
+            gCtrl.cities      = geoData.cities;
+          });
+
 				}]
 			 )
 
@@ -74,9 +81,6 @@
 				// TIP: Access Route Parameters for your page via $stateParams.parameterName
 				function ($scope, $stateParams, geoData) {
 					var eCtrl = this;
-
-					eCtrl.departments = geoData.departments;
-					eCtrl.cities      = geoData.cities;
 
 					eCtrl.getCityName = function (city) {
 						return 'City: ' + city.cityName + ', Dept: ' + city.deptName;
@@ -106,6 +110,12 @@
 
 						});
 
+          // Because of a performance illusion, data is loaded after entering the state
+          $scope.$on('$ionicView.afterEnter', function () {
+            eCtrl.departments = geoData.departments;
+            eCtrl.cities      = geoData.cities;
+          });
+
 
 				}]
 			 )
@@ -134,12 +144,6 @@
 
 					var gridCtrl = this;
 
-					gridCtrl.departments = geoData.departments;
-					gridCtrl.cities      = geoData.cities;
-
-					// Array used to display the city list. This array is updated every time a set of values is selected.
-					gridCtrl.citiesSet   = gridCtrl.cities;
-
 					/**
 					 * Retrieves city names when a value is selected.
 					 * @param   {JSON object} city The selected value or values
@@ -157,6 +161,15 @@
 					gridCtrl.parseDepartment = function (deptCode) {
 						return (_.find(gridCtrl.departments, { departmentCode: deptCode })).departmentName;
 					};
+
+          // Because of a performance illusion, data is loaded after entering the state
+          $scope.$on('$ionicView.afterEnter', function () {
+            gridCtrl.departments = geoData.departments;
+            gridCtrl.cities      = geoData.cities;
+
+            // Array used to display the city list. This array is updated every time a set of values is selected.
+            gridCtrl.citiesSet   = gridCtrl.cities;
+          });
 
 
 				}]
