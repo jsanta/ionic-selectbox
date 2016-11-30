@@ -17,13 +17,13 @@
 			 )
 
 		.controller('inlineSearchExampleCtrl',
-				['$scope', '$stateParams', 'geoService',
+				['$scope', '$stateParams', 'geoData',
 				// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 				// You can include any angular dependencies as parameters for this function
 				// TIP: Access Route Parameters for your page via $stateParams.parameterName
-				function ($scope, $stateParams, geoService) {
+				function ($scope, $stateParams, geoData) {
 					var sCtrl = this;
-					sCtrl.cities = geoService.getCities();
+					sCtrl.cities = geoData.cities;
 
 					sCtrl.getCityName = function (city) {
 						return city.cityName;
@@ -34,15 +34,15 @@
 			 )
 
 		.controller('groupedDisplayExampleCtrl',
-				['$scope', '$stateParams', 'geoService',
+				['$scope', '$stateParams', 'geoData',
 				// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 				// You can include any angular dependencies as parameters for this function
 				// TIP: Access Route Parameters for your page via $stateParams.parameterName
-				function ($scope, $stateParams, geoService) {
+				function ($scope, $stateParams, geoData) {
 					var gCtrl = this;
 
-					gCtrl.departments = geoService.getDepartments();
-					gCtrl.cities      = geoService.getCities();
+					gCtrl.departments = geoData.departments;
+					gCtrl.cities      = geoData.cities;
 
 					gCtrl.getCityName = function (city) {
 						return city.cityName;
@@ -68,15 +68,15 @@
 			 )
 
 		.controller('extraInformationExampleCtrl',
-				['$scope', '$stateParams', 'geoService',
+				['$scope', '$stateParams', 'geoData',
 				// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 				// You can include any angular dependencies as parameters for this function
 				// TIP: Access Route Parameters for your page via $stateParams.parameterName
-				function ($scope, $stateParams, geoService) {
+				function ($scope, $stateParams, geoData) {
 					var eCtrl = this;
 
-					eCtrl.departments = geoService.getDepartments();
-					eCtrl.cities      = geoService.getCities();
+					eCtrl.departments = geoData.departments;
+					eCtrl.cities      = geoData.cities;
 
 					eCtrl.getCityName = function (city) {
 						return 'City: ' + city.cityName + ', Dept: ' + city.deptName;
@@ -126,18 +126,18 @@
 			})
 
 		.controller('gridController',
-				['$scope', '$stateParams', 'geoService',
+				['$scope', '$stateParams', 'geoData',
 				// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 				// You can include any angular dependencies as parameters for this function
 				// TIP: Access Route Parameters for your page via $stateParams.parameterName
-				function ($scope, $stateParams, geoService) {
+				function ($scope, $stateParams, geoData) {
 
 					var gridCtrl = this;
 
-					gridCtrl.departments = geoService.getDepartments();
-					gridCtrl.cities      = geoService.getCities();
+					gridCtrl.departments = geoData.departments;
+					gridCtrl.cities      = geoData.cities;
 
-					// Array used to disdplay the city list. This array is updated every time a set of values is selected.
+					// Array used to display the city list. This array is updated every time a set of values is selected.
 					gridCtrl.citiesSet   = gridCtrl.cities;
 
 					/**

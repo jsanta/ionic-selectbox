@@ -22,25 +22,56 @@
 				.state('search', {
 					url: '/search',
 					templateUrl: 'templates/inlineSearchExample.html',
-					controller: 'inlineSearchExampleCtrl as sCtrl'
+					controller: 'inlineSearchExampleCtrl as sCtrl',
+                    resolve: {
+                        geoData: function (geoService) {
+                            return {
+                                cities: geoService.getCities()
+                            };
+                        }
+                    }
 				})
 
 				.state('grouped', {
 					url: '/grouped',
 					templateUrl: 'templates/groupedDisplayExample.html',
-					controller: 'groupedDisplayExampleCtrl as gCtrl'
+					controller: 'groupedDisplayExampleCtrl as gCtrl',
+                    resolve: {
+                        geoData: function (geoService) {
+                            return {
+                                cities: geoService.getCities(),
+                                departments: geoService.getDepartments()
+                            };
+                        }
+                    }
 				})
 
 				.state('extra', {
 					url: '/extraInfo',
 					templateUrl: 'templates/extraInformationExample.html',
-					controller: 'extraInformationExampleCtrl as eCtrl'
+					controller: 'extraInformationExampleCtrl as eCtrl',
+                    resolve: {
+                        geoData: function (geoService) {
+                            return {
+                                cities: geoService.getCities(),
+                                departments: geoService.getDepartments()
+                            };
+                        }
+                    }
 				})
 
 				.state('grid', {
 					url: '/grid',
 					templateUrl: 'templates/gridDisplayExample.html',
-					controller: 'gridController as gridCtrl'
+					controller: 'gridController as gridCtrl',
+					resolve: {
+						geoData: function (geoService) {
+							return {
+								cities: geoService.getCities(),
+								departments: geoService.getDepartments()
+							};
+						}
+					}
 				});
 
 			$urlRouterProvider.otherwise('/');
