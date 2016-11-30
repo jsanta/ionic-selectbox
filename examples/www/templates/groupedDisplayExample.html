@@ -1,5 +1,5 @@
 <ion-view title="Grouped display example" id="groupedPage">
-	<ion-content padding="true" class="has-header">
+	<ion-content padding="true" class="has-header" overflow-scroll="true">
 
 		<p>Classic approach:
 			<br> Two selecboxes, the second one depending on the value selected on the first one.
@@ -14,7 +14,7 @@
 
 				<select id="department" name="department"
 						ng-model="gCtrl.department"
-						ng-options="department as department.departmentName for department in gCtrl.departments">
+						ng-options="department as department.departmentName for department in ::gCtrl.departments">
 					<option value='' disabled selected hidden ng-show="!gCtrl.department">Select a department</option>
 				</select>
 			</label>
@@ -24,7 +24,9 @@
 					Cities
 				</div>
 
-				<select id="city" name="city" ng-model="gCtrl.city" ng-options="city as city.cityName for city in gCtrl.cities | filter:{ deptCode: gCtrl.department.departmentCode }:true">
+				<select id="city" name="city"
+                ng-model="gCtrl.city"
+                ng-options="city as city.cityName for city in gCtrl.cities | filter:{ deptCode: gCtrl.department.departmentCode }:true">
 					<option value='' disabled selected hidden ng-show="!gCtrl.city">Select a city</option>
 				</select>
 			</label>
