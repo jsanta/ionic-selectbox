@@ -68,15 +68,17 @@
 				selectCtrl.displayedItem = item;
 				if (!!selectCtrl.displayCallback && !isDisplaying) {
 					$timeout(function () {
-						element = angular.element(document.querySelector('.select-modal ion-content .visible-detail'));
-						html = selectCtrl.displayCallback(item);
-						template = $compile(angular.element(html))($scope);
 
-						element.append(template);
+            element = angular.element(document.querySelector('.select-modal ion-content .visible-detail'));
+            html = selectCtrl.displayCallback(item);
+            template = $compile(angular.element(html))($scope);
 
-						$ionicScrollDelegate.resize();
-						scrollOffset = (!scrollOffset) ? (!!selectCtrl.scrollOffset) ? selectCtrl.scrollOffset : 380 : scrollOffset;
-						selectCtrl.scrollBy(event, scrollOffset);
+            element.append(template);
+
+            $ionicScrollDelegate.resize();
+            scrollOffset = (!scrollOffset) ? (!!selectCtrl.scrollOffset) ? selectCtrl.scrollOffset : 380 : scrollOffset;
+            selectCtrl.scrollBy(event, scrollOffset);
+
 					}, 10);
 				}
 
@@ -85,7 +87,8 @@
 			};
 
 			selectCtrl.selectValue = function (item) {
-				$timeout(function () {
+				//$timeout(function () {
+        $scope.$applyAsync(function () {
 					selectCtrl.model = (_.keys(item).length === 1 && _.keys(item)[0] === 'displayItem') ? item.displayItem : item;
 
 					//selectCtrl.model.displayModel = selectCtrl.pparseData(item);
@@ -220,11 +223,11 @@
 
 			// Binds a watcher to list to avoid blank listings
 			// when promises have not resolved
-			$scope.$watch(angular.bind(this, function () {
+			$scope.$watchCollection(angular.bind(this, function () {
 				return this.list;
 			}),
 				function (newVal, oldVal) {
-					console.log('Updates list');
+					//console.log('Updates list');
 					if ((!!newVal || !!oldVal) && newVal !== oldVal) {
 						selectCtrl.filteredList = (!!newVal) ? selectCtrl.list : selectCtrl.filteredList;
 						selectCtrl.filteredList = _.map(selectCtrl.filteredList, function (v, k) {
