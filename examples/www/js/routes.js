@@ -15,25 +15,28 @@
 
 				.state('demoSelectBox', {
 					url: '/',
+          cache: false,
 					templateUrl: 'templates/demoIonicSelectbox.html',
 					controller: 'demoIonicSelectboxCtrl as dCtrl'
 				})
 
 				.state('search', {
 					url: '/search',
+          cache: false,
 					templateUrl: 'templates/inlineSearchExample.html',
 					controller: 'inlineSearchExampleCtrl as sCtrl',
-                    resolve: {
-                        geoData: function (geoService) {
-                            return {
-                                cities: geoService.getCities()
-                            };
-                        }
-                    }
+          resolve: {
+              geoData: function (geoService) {
+                  return {
+                      cities: geoService.getCities()
+                  };
+              }
+          }
 				})
 
 				.state('grouped', {
 					url: '/grouped',
+          cache: false,
 					templateUrl: 'templates/groupedDisplayExample.html',
 					controller: 'groupedDisplayExampleCtrl as gCtrl',
                     resolve: {
@@ -48,6 +51,7 @@
 
 				.state('extra', {
 					url: '/extraInfo',
+          cache: false,
 					templateUrl: 'templates/extraInformationExample.html',
 					controller: 'extraInformationExampleCtrl as eCtrl',
                     resolve: {
@@ -62,6 +66,7 @@
 
 				.state('grid', {
 					url: '/grid',
+          cache: true,
 					templateUrl: 'templates/gridDisplayExample.html',
 					controller: 'gridController as gridCtrl',
 					resolve: {
