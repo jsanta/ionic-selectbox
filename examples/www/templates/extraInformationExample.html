@@ -1,5 +1,5 @@
 <ion-view title="Extra information example" id="extrainfoPage">
-	<ion-content padding="true" class="has-header">
+	<ion-content padding="true" class="has-header" overflow-scroll="true">
 		<p>We'll be using the grouped example, plus extra information.
 			<br>Classic approach:
 			<br> Two selectboxes, the second one depending on the value selected on the first one. After the value is selected extra information is shown.
@@ -14,7 +14,7 @@
 
 				<select id="department" name="department"
 						ng-model="eCtrl.department"
-						ng-options="department as department.departmentName for department in eCtrl.departments">
+						ng-options="department as department.departmentName for department in ::eCtrl.departments">
 					<option value='' disabled selected hidden ng-show="!eCtrl.department">Select a department</option>
 				</select>
 			</label>
@@ -24,7 +24,9 @@
 					Cities
 				</div>
 
-				<select id="city" name="city" ng-model="eCtrl.city" ng-options="city as city.cityName for city in eCtrl.cities | filter:{ deptCode: eCtrl.department.departmentCode }:true">
+				<select id="city" name="city"
+                ng-model="eCtrl.city"
+                ng-options="city as city.cityName for city in eCtrl.cities | filter:{ deptCode: eCtrl.department.departmentCode }:true">
 					<option value='' disabled selected hidden ng-show="!eCtrl.city">Select a city</option>
 				</select>
 			</label>

@@ -1,0 +1,11 @@
+{
+  "name": "Selectbox example",
+  "app_id": "104832e5",
+  "browsers": [
+    {
+      "platform": "android",
+      "browser": "crosswalk",
+      "version": "12.41.296.5"
+    }
+  ]
+}
