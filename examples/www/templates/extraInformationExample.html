@@ -26,7 +26,7 @@
 
 				<select id="city" name="city"
                 ng-model="eCtrl.city"
-                ng-options="city as city.cityName for city in ::eCtrl.cities | filter:{ deptCode: eCtrl.department.departmentCode }:true">
+                ng-options="city as city.cityName for city in eCtrl.cities | filter:{ deptCode: eCtrl.department.departmentCode }:true">
 					<option value='' disabled selected hidden ng-show="!eCtrl.city">Select a city</option>
 				</select>
 			</label>
