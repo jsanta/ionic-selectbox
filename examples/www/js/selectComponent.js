@@ -47,8 +47,13 @@
 
 			selectCtrl.scrollBy = function ($event, itemHeight) {
 				var elementPositionY = $event.y,
-					offsetY = (elementPositionY + itemHeight >= windowHeight) ? itemHeight - (windowHeight - elementPositionY) : 0;
-				$ionicScrollDelegate.scrollBy(0, offsetY, false);
+					deltaY = 14,
+					offsetY = (elementPositionY + itemHeight + deltaY >= windowHeight) ? itemHeight - (windowHeight - elementPositionY) : 0;
+				console.log('elementPositionY + itemHeight + deltaY >= windowHeight', windowHeight, elementPositionY, itemHeight, deltaY, offsetY);
+				if (offsetY > 0) {
+					$ionicScrollDelegate.scrollBy(0, offsetY, false);
+				}
+
 			};
 
 			selectCtrl.toggleGroup = function (key) {
@@ -63,23 +68,33 @@
 				var template,
 					html,
 					element,
+					displayedText,
 					isDisplaying = (selectCtrl.displayedItem === item);
 
 				selectCtrl.displayedItem = item;
 				if (!!selectCtrl.displayCallback && !isDisplaying) {
 					$timeout(function () {
+						element = angular.element(document.querySelector('.select-modal ion-content .visible-detail'));
+						html = selectCtrl.displayCallback(item);
+						template = $compile(angular.element(html))($scope);
+						element.append(template);
+						$ionicScrollDelegate.resize();
 
-            element = angular.element(document.querySelector('.select-modal ion-content .visible-detail'));
-            html = selectCtrl.displayCallback(item);
-            template = $compile(angular.element(html))($scope);
+					}, 100).then(function () {
+						scrollOffset = (!scrollOffset) ? (!!selectCtrl.scrollOffset) ? selectCtrl.scrollOffset : 380 : scrollOffset;
+						selectCtrl.scrollBy(event, scrollOffset);
+					});
 
-            element.append(template);
+				} else {
+					element = angular.element(document.querySelector('.select-modal ion-content .visible-detail'));
+					displayedText = element.text();
 
-            $ionicScrollDelegate.resize();
-            scrollOffset = (!scrollOffset) ? (!!selectCtrl.scrollOffset) ? selectCtrl.scrollOffset : 380 : scrollOffset;
-            selectCtrl.scrollBy(event, scrollOffset);
-
-					}, 10);
+					// Fallback for the weird case when displayedItem should be showing something but displays nothing
+					if (!!!displayedText) {
+						console.warn('Should be displaying something');
+						selectCtrl.displayedItem = undefined;
+						//selectCtrl.displayDetail(event, item, scrollOffset);
+					}
 				}
 
 				return false;
@@ -88,7 +103,7 @@
 
 			selectCtrl.selectValue = function (item) {
 				//$timeout(function () {
-        $scope.$applyAsync(function () {
+				$scope.$applyAsync(function () {
 					selectCtrl.model = (_.keys(item).length === 1 && _.keys(item)[0] === 'displayItem') ? item.displayItem : item;
 
 					//selectCtrl.model.displayModel = selectCtrl.pparseData(item);

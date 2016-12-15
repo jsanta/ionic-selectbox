@@ -25,8 +25,8 @@
 				</div>
 
 				<select id="city" name="city"
-                ng-model="eCtrl.city"
-                ng-options="city as city.cityName for city in eCtrl.cities | filter:{ deptCode: eCtrl.department.departmentCode }:true">
+				ng-model="eCtrl.city"
+				ng-options="city as city.cityName for city in eCtrl.cities | filter:{ deptCode: eCtrl.department.departmentCode }:true">
 					<option value='' disabled selected hidden ng-show="!eCtrl.city">Select a city</option>
 				</select>
 			</label>
@@ -52,7 +52,8 @@
 					   parse-data="eCtrl.getCityName"
 					   group-by="deptCode"
 					   parse-group-key="eCtrl.parseDepartment"
-					   place-holder="Select city"></selectbox>
+					   place-holder="Select city"
+					   scroll-offset="225"></selectbox>
 
 			<div class="item">
 				<p>To get the Department value you may need a watch in your controller. Not really big deal:</p>

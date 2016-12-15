@@ -32,11 +32,11 @@
 		<ion-content overflow-scroll="true" class="has-header has-subheader">
 
 			<ion-list class="no-groupBy" ng-if="!$ctrl.groupBy" ng-cloak>
-				<ion-item class="item-text-wrap" bindonce ng-repeat="item in $ctrl.filteredList track by $index" on-hold="$ctrl.displayDetail($event, item);" ng-click="$ctrl.selectValue(item)">
+				<ion-item class="item-text-wrap" bindonce ng-repeat="item in $ctrl.filteredList track by $index" on-hold="$ctrl.displayDetail($event, item, $ctrl.scrollOffset);" ng-click="$ctrl.selectValue(item)">
 					<div class="row" bindonce="item">
 						<div class="col col-90" ng-click="$ctrl.selectValue(item)">{{item.displayItem}}</div>
 						<div class="col text-center" bo-if="!!$ctrl.displayCallback">
-							<button class="button button-clear button-dark icon ion-information-circled" ng-click="$ctrl.displayDetail($event, item);"></button>
+							<button class="button button-clear button-dark icon ion-information-circled" ng-click="$ctrl.displayDetail($event, item, $ctrl.scrollOffset);"></button>
 						</div>
 					</div>
 					<div ng-if="$ctrl.displayedItem === item" ng-click="$ctrl.selectValue(item)" class="visible-detail"></div>
@@ -54,15 +54,15 @@
 											  'ion-ios-plus': !!$ctrl.modalSearch }"></button>
 						</div>
 					</div>
-					<div class="list" ng-if="$ctrl.displayKey[key] || !!$ctrl.modalSearch">
+					<div class="list" ng-show="$ctrl.displayKey[key] || !!$ctrl.modalSearch">
 						<div class="item" bindonce
 							 ng-repeat="item in value track by $index | fuzzy: $ctrl.modalSearch"
-							 on-hold="$ctrl.displayDetail($event, item);"
+							 on-hold="$ctrl.displayDetail($event, item, $ctrl.scrollOffset);"
 							 ng-if="!!!$ctrl.grid">
 							<div class="row" bindonce="item">
 								<div class="col col-90" ng-click="$ctrl.selectValue(item)">{{item.displayItem}}</div>
 								<div class="col text-center" bo-if="!!$ctrl.displayCallback">
-									<button class="button button-clear button-dark icon ion-information-circled" ng-click="$ctrl.displayDetail($event, item);"></button>
+									<button class="button button-clear button-dark icon ion-information-circled" ng-click="$ctrl.displayDetail($event, item, $ctrl.scrollOffset);"></button>
 								</div>
 							</div>
 							<div ng-if="$ctrl.displayedItem === item" ng-click="$ctrl.selectValue(item)" class="visible-detail"></div>
@@ -82,7 +82,7 @@
 
 				</ion-item>
 			</ion-list>
-			<div class="spacer" style="width: 100%; height: 80px;"></div>
+			<div class="spacer" style="width: 100%;" ng-style="{ height: (!!$ctrl.scrollOffset) ? $ctrl.scrollOffset + 'px' : '80px' }"></div>
 		</ion-content>
 		<button id="multipleAdd" class="button button-large button-royal icon ion-plus"
 				ng-if="!!$ctrl.multiple"
