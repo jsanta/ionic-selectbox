@@ -170,3 +170,14 @@ griditem.selected:after {
 	color: rgba(56, 126, 245, 0.6);
 	content: "";
 }
+
+
+div.list[data-display-callback=false] .btn-extraInfo {
+	display: none;
+}
+.visible-detail[data-display-info=true] {
+	display: block;
+}
+.visible-detail[data-display-info=false] {
+	display: none;
+}
