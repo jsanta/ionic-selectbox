@@ -15,32 +15,68 @@
 
 				.state('demoSelectBox', {
 					url: '/',
+          cache: false,
 					templateUrl: 'templates/demoIonicSelectbox.html',
 					controller: 'demoIonicSelectboxCtrl as dCtrl'
 				})
 
 				.state('search', {
 					url: '/search',
+          cache: false,
 					templateUrl: 'templates/inlineSearchExample.html',
-					controller: 'inlineSearchExampleCtrl as sCtrl'
+					controller: 'inlineSearchExampleCtrl as sCtrl',
+          resolve: {
+              geoData: function (geoService) {
+                  return {
+                      cities: geoService.getCities()
+                  };
+              }
+          }
 				})
 
 				.state('grouped', {
 					url: '/grouped',
+          cache: false,
 					templateUrl: 'templates/groupedDisplayExample.html',
-					controller: 'groupedDisplayExampleCtrl as gCtrl'
+					controller: 'groupedDisplayExampleCtrl as gCtrl',
+                    resolve: {
+                        geoData: function (geoService) {
+                            return {
+                                cities: geoService.getCities(),
+                                departments: geoService.getDepartments()
+                            };
+                        }
+                    }
 				})
 
 				.state('extra', {
 					url: '/extraInfo',
+          cache: false,
 					templateUrl: 'templates/extraInformationExample.html',
-					controller: 'extraInformationExampleCtrl as eCtrl'
+					controller: 'extraInformationExampleCtrl as eCtrl',
+                    resolve: {
+                        geoData: function (geoService) {
+                            return {
+                                cities: geoService.getCities(),
+                                departments: geoService.getDepartments()
+                            };
+                        }
+                    }
 				})
 
 				.state('grid', {
 					url: '/grid',
+          cache: true,
 					templateUrl: 'templates/gridDisplayExample.html',
-					controller: 'gridController as gridCtrl'
+					controller: 'gridController as gridCtrl',
+					resolve: {
+						geoData: function (geoService) {
+							return {
+								cities: geoService.getCities(),
+								departments: geoService.getDepartments()
+							};
+						}
+					}
 				});
 
 			$urlRouterProvider.otherwise('/');

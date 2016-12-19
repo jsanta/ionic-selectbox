@@ -3633,18 +3633,60 @@
 			return cities;
 		})
 
-
 		.factory('BlankFactory', [function () {
 
 		}])
 
-		.service('geoService', function (geoCities, geoDepartments) {
+		.provider('geoProvider', function ($cacheFactoryProvider) {
+			var $cacheFactory = $cacheFactoryProvider.$get(),
+				geoProvider   = this,
+				geoCache      = $cacheFactory('geoCache');
+
+            geoProvider.setCities = function (cities) {
+            	geoCache.put('cities', cities);
+			};
+            geoProvider.getCities = function () {
+            	return geoCache.get('cities');
+			};
+
+            geoProvider.setDepartments = function (departments) {
+                geoCache.put('departments', departments);
+            };
+            geoProvider.getDepartments = function () {
+                return geoCache.get('departments');
+            };
+
+            geoProvider.forceReload = function () {
+            	geoCache.removeAll();
+			};
+
+			return {
+				$get: function () {
+					return geoProvider;
+				}
+			};
+
+		})
+
+		.service('geoService', function (geoProvider, geoCities, geoDepartments) {
 			return {
 				getCities: function () {
-					return geoCities;
+					var cities = geoProvider.getCities();
+					if (!!!cities) {
+						console.log('Get city values from angular.variable and set cache');
+						cities = geoCities;
+						geoProvider.setCities(cities);
+					}
+					return cities;
 				},
 				getDepartments: function () {
-					return geoDepartments;
+                    var departments = geoProvider.getDepartments();
+                    if (!!!departments) {
+                        console.log('Get department values from angular.variable and set cache');
+                        departments = geoDepartments;
+                        geoProvider.setDepartments(departments);
+                    }
+					return departments;
 				}
 			};
 
