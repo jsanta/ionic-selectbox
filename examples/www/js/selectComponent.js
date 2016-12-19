@@ -3,7 +3,7 @@
  *
  **/
 /*jslint nomen: true */
-/*global console, _ */
+/*global console, performance, _ */
 (function (angular) {
 	'use strict';
 
@@ -22,7 +22,26 @@
 						selectCtrl.modal = modal;
 					});
 				},
+				ctrlTimerStart = performance.now(),
 				windowHeight = $window.innerHeight;
+
+			function countWatchers() {
+				var root = angular.element(document.getElementsByTagName('body')),
+					watchers = 0,
+					f = function (element) {
+						if (element.data().hasOwnProperty('$scope')) {
+							watchers += (element.data().$scope.$$watchers || []).length;
+						}
+
+						angular.forEach(element.children(), function (childElement) {
+							f(angular.element(childElement));
+						});
+					};
+
+				f(root);
+
+				return watchers;
+			}
 
 			selectCtrl.ddisplayItem = function (item) {
 				var result = (!!!item) ? undefined : (!!selectCtrl.displayItem) ? selectCtrl.displayItem(item) : selectCtrl.pparseData(item);
@@ -49,7 +68,7 @@
 				var elementPositionY = $event.y,
 					deltaY = 14,
 					offsetY = (elementPositionY + itemHeight + deltaY >= windowHeight) ? itemHeight - (windowHeight - elementPositionY) : 0;
-				console.log('elementPositionY + itemHeight + deltaY >= windowHeight', windowHeight, elementPositionY, itemHeight, deltaY, offsetY);
+
 				if (offsetY > 0) {
 					$ionicScrollDelegate.scrollBy(0, offsetY, false);
 				}
@@ -69,15 +88,30 @@
 					html,
 					element,
 					displayedText,
-					isDisplaying = (selectCtrl.displayedItem === item);
+					isDisplaying  = (selectCtrl.displayedItem === item),
+					loadedElement = document.querySelector('.visible-detail[data-item-id="' + item.displayItem + '"]'),
+					isLoaded     = (loadedElement.getAttribute('data-info-loaded') === 'true') ? true : false,
+					infoElements = document.querySelectorAll('.visible-detail[data-display-info=true]');
+
+				_.each(infoElements, function (el) {
+					el.setAttribute('data-display-info', 'false');
+				});
+				loadedElement.setAttribute('data-display-info', 'true');
+
 
 				selectCtrl.displayedItem = item;
 				if (!!selectCtrl.displayCallback && !isDisplaying) {
 					$timeout(function () {
-						element = angular.element(document.querySelector('.select-modal ion-content .visible-detail'));
-						html = selectCtrl.displayCallback(item);
-						template = $compile(angular.element(html))($scope);
-						element.append(template);
+						//element = angular.element(document.querySelector('.select-modal ion-content .visible-detail'));
+						element = angular.element(document.querySelector('.visible-detail[data-item-id="' + item.displayItem + '" ][data-display-info=true]'));
+						if (!isLoaded) {
+							html = selectCtrl.displayCallback(item);
+							template = $compile(angular.element(html))($scope);
+							element.append(template);
+
+							loadedElement.setAttribute('data-info-loaded', 'true');
+						}
+
 						$ionicScrollDelegate.resize();
 
 					}, 100).then(function () {
@@ -205,8 +239,10 @@
 					// (not really necesary because selected values are deleted from the list)
 					selectCtrl.list = _.each(selectCtrl.list, function (v, k) {
 						if (!!v.multipleSelect) {
-							var searchItem = _.pickBy(v, function (vv, k) { return k !== 'multipleSelect'; }),
-								idx        = _.findIndex(selectCtrl.filteredList, searchItem);
+							var searchItem = _.pickBy(v, function (vv, k) {
+									return k !== 'multipleSelect';
+								}),
+								idx = _.findIndex(selectCtrl.filteredList, searchItem);
 
 							selectCtrl.filteredList[idx].multipleSelect = undefined;
 						}
@@ -238,9 +274,10 @@
 
 			// Binds a watcher to list to avoid blank listings
 			// when promises have not resolved
-			$scope.$watchCollection(angular.bind(this, function () {
-				return this.list;
-			}),
+			$scope.$watchCollection(angular.bind(this,
+				function () {
+					return this.list;
+				}),
 				function (newVal, oldVal) {
 					//console.log('Updates list');
 					if ((!!newVal || !!oldVal) && newVal !== oldVal) {
@@ -253,14 +290,14 @@
 							};
 						});
 					}
-				}
-				);
+				});
 
 
 			// Binds a watcher to modalSearch to debounce search and use a filteredList
-			$scope.$watchCollection(angular.bind(this, function () {
-				return this.modalSearch;
-			}),
+			$scope.$watchCollection(angular.bind(this,
+				function () {
+					return this.modalSearch;
+				}),
 				function (newVal, oldVal) {
 					//console.log('Updates filteredList');
 					if ((!!newVal || !!oldVal) && newVal !== oldVal) {
@@ -268,10 +305,14 @@
 
 						// If multiple select must set the checked attribute when searching
 						if (selectCtrl.multiple) {
-							var  multiSelectList = _.filter(selectCtrl.list, { multipleSelect: true });
+							var multiSelectList = _.filter(selectCtrl.list, {
+								multipleSelect: true
+							});
 							_.each(multiSelectList, function (v, k) {
-								var searchItem = _.pickBy(v, function (vv, k) { return k !== 'multipleSelect'; }),
-									idx        = _.findIndex(selectCtrl.filteredList, searchItem);
+								var searchItem = _.pickBy(v, function (vv, k) {
+										return k !== 'multipleSelect';
+									}),
+									idx = _.findIndex(selectCtrl.filteredList, searchItem);
 								if (idx !== -1) {
 									selectCtrl.filteredList[idx].multiSelect = true;
 								}
@@ -284,20 +325,22 @@
 
 				if (selectCtrl.multiple) {
 
-					var searchItem = _.pickBy(item, function (v, k) { return k !== 'multipleSelect'; }),
-						idx        = _.findIndex(selectCtrl.list, searchItem);
+					var searchItem = _.pickBy(item, function (v, k) {
+							return k !== 'multipleSelect';
+						}),
+						idx = _.findIndex(selectCtrl.list, searchItem);
 
 					// Updates the visible item multipleSelect state and the original list item
-					item.multipleSelect                 = !!!item.multipleSelect;
+					item.multipleSelect = !!!item.multipleSelect;
 					selectCtrl.list[idx].multipleSelect = item.multipleSelect;
 
 					// Updates the griditem class to show a checkmark if selected
 					// Don't do (change the state, not the class)
-//					if (item.multipleSelect) {
-//						angular.element(event.currentTarget).addClass('selected');
-//					} else {
-//						angular.element(event.currentTarget).removeClass('selected');
-//					}
+					//					if (item.multipleSelect) {
+					//						angular.element(event.currentTarget).addClass('selected');
+					//					} else {
+					//						angular.element(event.currentTarget).removeClass('selected');
+					//					}
 
 				} else {
 					console.log('Not multiple select. Act normal.');
@@ -306,12 +349,16 @@
 			};
 
 			selectCtrl.selectMultiple = function () {
-				var multipleSelections = _.filter(selectCtrl.list, { multipleSelect: true });
+				var multipleSelections = _.filter(selectCtrl.list, {
+					multipleSelect: true
+				});
 
 				// Model does not have the multipleselect attribute.
 				// Delete null values and return unique selections.
 				selectCtrl.model = _.concat(selectCtrl.model, _.map(multipleSelections, function (v, k) {
-					return _.pickBy(v, function (vv, kk) { return kk !== 'multipleSelect'; });
+					return _.pickBy(v, function (vv, kk) {
+						return kk !== 'multipleSelect';
+					});
 				}));
 				selectCtrl.model = _.remove(selectCtrl.model, null);
 				selectCtrl.model = _.uniq(selectCtrl.model);
@@ -323,6 +370,13 @@
 				selectCtrl.closeModal();
 
 			};
+
+			$scope.$on('onRepeatLast', function (scope, element, attrs) {
+				console.log('Accumulative countWatchers: ', countWatchers());
+				console.log('Accumulative performance (ms): ', performance.now() - ctrlTimerStart);
+			});
+
+			console.log('countWatchers', countWatchers());
 
 		};
 
@@ -371,25 +425,77 @@
 
 			})
 
-		.component('selectbox',
-			{
-				bindings: {
-					model: '=',
-					list: '=',
-					groupBy: '@?',
-					parseGroupKey: '<?',
-					displayCallback: '<?',
-					parseData: '<?',
-					displayItem: '<?',
-					disableIf: '=?',
-					placeHolder: '@?',
-					scrollOffset: '<?',
-					grid: '=?',
-					gridDisplay: '<?',
-					multiple: '=?'
-				},
-				controller: selectBoxController,
-				templateUrl: 'templates/selectComponent.html'
-			});
+		.directive('onLastRepeat', function () {
+			return function (scope, element, attrs) {
+				if (scope.$last) {
+					setTimeout(function () {
+						scope.$emit('onRepeatLast', element, attrs);
+					}, 1);
+				}
+			};
+		})
+
+		// Ref.: https://kentcdodds.github.io/kcd-angular/#/kcd-recompile
+		.directive('kcdRecompile', ['$parse', function ($parse) {
+
+			return {
+				transclude: true,
+				link: function link(scope, $el, attrs, ctrls, transclude) {
+					var previousElements,
+						compile = function compile() {
+							transclude(scope, function (clone, clonedScope) {
+								// transclude creates a clone containing all children elements;
+								// as we assign the current scope as first parameter, the clonedScope is the same
+								previousElements = clone;
+								$el.append(clone);
+							});
+						},
+						recompile = function () {
+							if (previousElements) {
+								previousElements.remove();
+								previousElements = null;
+								$el.empty();
+							}
+
+							compile();
+						};
+					compile();
+
+					scope.$watch(attrs.kcdRecompile, function (_new, _old) {
+						var useBoolean = attrs.hasOwnProperty('useBoolean');
+						if ((useBoolean && (!_new || _new === 'false')) || (!useBoolean && (!_new || _new === _old))) {
+							return;
+						}
+						// reset kcdRecompile to false if we're using a boolean
+						if (useBoolean) {
+							$parse(attrs.kcdRecompile).assign(scope, false);
+						}
+
+						recompile();
+					}, typeof $parse(attrs.kcdRecompile)(scope) === 'object');
+				}
+			};
+		}])
+
+
+		.component('selectbox', {
+			bindings: {
+				model: '=',
+				list: '=',
+				groupBy: '@?',
+				parseGroupKey: '<?',
+				displayCallback: '<?',
+				parseData: '<?',
+				displayItem: '<?',
+				disableIf: '=?',
+				placeHolder: '@?',
+				scrollOffset: '<?',
+				grid: '=?',
+				gridDisplay: '<?',
+				multiple: '=?'
+			},
+			controller: selectBoxController,
+			templateUrl: 'templates/selectComponent.html'
+		});
 
 }(window.angular));
